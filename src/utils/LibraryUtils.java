@@ -19,6 +19,7 @@ public class LibraryUtils {
     private static void printPublications(Library lib, Class cl)
     {
        long countPublications = lib.getPublications().values().stream()
+               .filter(cl::isInstance)
                .sorted(new Library.AlphabeticComparator())
                .peek(System.out::println)
                .count();
