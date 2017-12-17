@@ -10,7 +10,7 @@ public class LibraryUtils {
         printPublications(lib,Book.class);
 
     }
-    String sad;
+
     public static void printMagazines(Library lib) {
 
         printPublications(lib,Magazine.class);
