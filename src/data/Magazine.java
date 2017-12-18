@@ -1,26 +1,20 @@
 package data;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 public class Magazine extends Publication {
     private static final long serialVersionUID = -6687916295854360508L;
-    private int month;
-    private int day;
+
     private String language;
 
 
     public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
+        return getLocalDate().getMonthValue();
     }
 
     public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
+        return getLocalDate().getDayOfMonth();
     }
 
     public String getLanguage() {
@@ -34,9 +28,9 @@ public class Magazine extends Publication {
     {
 
        super(year, title, publisher);
-        this.setLanguage(language);
-        this.setMonth(month);
-        this.setDay(day);
+        setLanguage(language);
+        setLocalDate(LocalDate.of(year,month,day));
+
 
     }
 
@@ -45,21 +39,16 @@ public class Magazine extends Publication {
         if (this == o) return true;
         if (!(o instanceof Magazine)) return false;
         if (!super.equals(o)) return false;
-
         Magazine magazine = (Magazine) o;
-
-        if (getMonth() != magazine.getMonth()) return false;
-        if (getDay() != magazine.getDay()) return false;
-        return getLanguage() != null ? getLanguage().equals(magazine.getLanguage()) : magazine.getLanguage() == null;
+        return getMonth() == magazine.getMonth() &&
+                getDay() == magazine.getDay() &&
+                Objects.equals(getLanguage(), magazine.getLanguage());
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + getMonth();
-        result = 31 * result + getDay();
-        result = 31 * result + (getLanguage() != null ? getLanguage().hashCode() : 0);
-        return result;
+
+        return Objects.hash(super.hashCode(), getMonth(), getDay(), getLanguage());
     }
 
     @Override

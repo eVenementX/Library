@@ -2,21 +2,27 @@
 package data;
 
 import java.io.Serializable;
-
+import java.time.LocalDate;
+import java.util.Objects;
 
 
 public abstract class Publication implements Serializable, Comparable<Publication>{
     private static final long serialVersionUID = 7910452641164094454L;
-    private int year;
+
     private String title;
     private String publisher;
+    private LocalDate localDate;
 
-    public int getYear() {
-        return year;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
+    public int getYear() {
+        return localDate.getYear();
     }
 
     public String getTitle() {
@@ -36,30 +42,25 @@ public abstract class Publication implements Serializable, Comparable<Publicatio
     }
     protected Publication(int year, String title, String publisher)
     {
-        this.setYear(year);
-        this.setTitle(title);
-        this.setPublisher(publisher);
+        setLocalDate(LocalDate.of(year,1,1));
+        setTitle(title);
+        setPublisher(publisher);
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Publication)) return false;
-
         Publication that = (Publication) o;
-
-        if (getYear() != that.getYear()) return false;
-        if (!getTitle().equals(that.getTitle())) return false;
-        return getPublisher().equals(that.getPublisher());
+        return Objects.equals(getTitle(), that.getTitle()) &&
+                Objects.equals(getPublisher(), that.getPublisher()) &&
+                Objects.equals(getLocalDate(), that.getLocalDate());
     }
 
     @Override
     public int hashCode() {
-        int result = getYear();
-        result = 31 * result + getTitle().hashCode();
-        result = 31 * result + getPublisher().hashCode();
-        return result;
+
+        return Objects.hash(getTitle(), getPublisher(), getLocalDate());
     }
 
     @Override
