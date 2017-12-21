@@ -26,7 +26,7 @@ public class FileManager {
             System.err.println("Błąd podczas zapisu danych do pliku " + FILE_NAME);
         }
     }
-    String test;
+
     public Library readLibraryFromFile() throws IOException, ClassNotFoundException {
         Library library = null;
         try(
